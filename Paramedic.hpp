@@ -63,15 +63,19 @@ namespace WarGame{
 
             for (int iRow= -1 ; iRow < 2; iRow++) {
                 for (int iCol= -1; iCol< 2; iCol++) {
-                    if( (sLocation.first+iRow > 0 && sLocation.first+iRow < numRows) && (sLocation.second+iCol > 0 && sLocation.second+iCol < numCols) )
+                    if(iRow != 0 && iCol != 0)
                     {
-                        if (gameBoard->matrix[sLocation.first+iRow][sLocation.second+iCol] != nullptr && gameBoard->matrix[sLocation.first+iRow][sLocation.second+iCol]->playerNumber == myPlayerNum )// If its an enemy Soldier
-                        {//heal
-                            gameBoard->matrix[sLocation.first+iRow][sLocation.second+iCol]->updateHP(200);
+                        if( (sLocation.first+iRow > 0 && sLocation.first+iRow < numRows) && (sLocation.second+iCol > 0 && sLocation.second+iCol < numCols) )
+                        {
+                            if (gameBoard->matrix[sLocation.first+iRow][sLocation.second+iCol] != nullptr && gameBoard->matrix[sLocation.first+iRow][sLocation.second+iCol]->playerNumber == myPlayerNum )// If its an enemy Soldier
+                            {//heal
+                                gameBoard->matrix[sLocation.first+iRow][sLocation.second+iCol]->updateHP(200);
 
 
+                            }
                         }
                     }
+
 
                 }
             }

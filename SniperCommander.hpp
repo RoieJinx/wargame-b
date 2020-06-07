@@ -18,37 +18,73 @@ using namespace std;
 namespace WarGame{
     class SniperCommander : public Soldier
     {
-        static const int Damage = 0;
+        static const int Damage = 100;
         static const int MAX_HP = 200;
 
-        /**
-         * Position location;
-         Board *board;
-         unsigned int playerNumber; // Who own me?
-         enum class Type {
-             FootSolider, FootSoliderCommander, Sniper, SniperCommander, Paramedic, ParamedicCommander
-         };
-         Type type;
-         //initial health points
-         static const int InitialHealthPoints;
-         int HP;
-         */
+
     public:
         SniperCommander(int player) : Soldier(player, Type::SniperCommander, MAX_HP)
         {
             cout << "  con SNiperCommander1" << endl;
         }
 
-        void Heal(int hp)
+        void updateHP(int hp)
         {
-            HP = (HP + hp) % (MAX_HP + 1);
+            int newHP = HP + hp;
+            if( newHP > MAX_HP )
+                HP = MAX_HP;
+            else if( newHP < 0 )
+                HP = 0;
+            else
+                HP = newHP;
         }
 
-        void attack(std::vector<std::vector<Soldier*>> matrix,std::pair<int,int> sLocation)
+
+        void attack(Board* gameBoard,std::pair<int,int> sLocation)
         {
-            //findEnemy()
+            //std::vector<std::vector<Soldier*>>& Matrix = (*gameBoard).matrix;
+            unsigned int myPlayerNum = (*gameBoard)[sLocation]->playerNumber;
+            int numRows = gameBoard->matrix.size();
+            int numCols = gameBoard->matrix[0].size();
+            int highest_enemy_health = 0; // Very big Number
+            std::pair<int,int> target_location;
+            int curHealth;
 
 
+            for (int iRow=0; iRow<numRows; iRow++) {
+                for (int iCol=0; iCol<numCols; iCol++) {
+                    if (gameBoard->matrix[iRow][iCol] != nullptr && gameBoard->matrix[iRow][iCol]->playerNumber != myPlayerNum )// If its an enemy Soldier
+                    {//Calculate the enemy with most health
+                        curHealth = gameBoard->matrix[iRow][iCol]->HP;
+                        if( curHealth > highest_enemy_health )
+                        {   // Update nearest enemy
+                            highest_enemy_health = curHealth;
+                            target_location.first = iRow;
+                            target_location.second = iCol;
+                        }
+                        else{
+                            cout<<"enemy far away"<< endl;
+                        }
+
+                    }
+                }
+            }
+            // now we have the location of the target
+            // use "heal" to change HP.
+            (*gameBoard)[target_location]->updateHP(-1*SniperCommander::Damage);
+            std::cout<<"Soldier : {" << sLocation.first <<"," << sLocation.second <<"} Did " << Damage << " Damage to : {" << target_location.first <<","<<target_location.second <<"}"<< endl;
+
+
+            // Finding other FootSoldiers and make them attack
+            for (int iRow=0; iRow<numRows; iRow++) {
+                for (int iCol = 0; iCol < numCols; iCol++) {
+                    if (gameBoard->matrix[iRow][iCol] != nullptr &&
+                        gameBoard->matrix[iRow][iCol]->playerNumber == myPlayerNum &&
+                        gameBoard->matrix[iRow][iCol]->type == Soldier::Type::Sniper  )// If its an enemy Soldier
+                        gameBoard->matrix[iRow][iCol]->attack(gameBoard , {iRow,iCol}) ;
+                }
+
+            }
         }
 
 

@@ -10,7 +10,9 @@
 #include "SniperCommander.hpp"
 #include "Paramedic.hpp"
 #include "ParamedicCommander.hpp"
+#include "Board.hpp"
 
+using namespace WarGame::Board::MoveDIR;
 using namespace WarGame;
 
 WarGame::Board fillBoard(){

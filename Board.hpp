@@ -23,8 +23,7 @@ namespace WarGame {
     std::vector<std::vector<Soldier*>> matrix; // Vector matrix to find Locations in O(1)
 
   //public:
-    enum class MoveDIR { Up = 0, Down, Right, Left
-    };
+    enum MoveDIR { Up = 0, Down, Right, Left};
 
     Position dirs[4] =
     {

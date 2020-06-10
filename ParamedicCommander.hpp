@@ -39,67 +39,17 @@ namespace WarGame{
             cout << "  con ParamedicCommander1" << endl;
         }
 
-        void updateHP(int hp)
+        void Heal(int hp)
         {
-            int newHP = HP + hp;
-            if( newHP > MAX_HP )
-                HP = MAX_HP;
-            else if( newHP < 0 )
-                HP = 0;
-            else
-                HP = newHP;
+            HP = (HP + hp) % (MAX_HP + 1);
         }
 
+        void attack(std::vector<std::vector<Soldier*>> matrix,std::pair<int,int> sLocation)
+        {
+            //findEnemy()
 
 
-            void attack(Board* gameBoard,std::pair<int,int> sLocation) {
-                //std::vector<std::vector<Soldier*>>& Matrix = (*gameBoard).matrix;
-                unsigned int myPlayerNum = (*gameBoard)[sLocation]->playerNumber;
-                int numRows = gameBoard->matrix.size();
-                int numCols = gameBoard->matrix[0].size();
-                int highest_enemy_health = 0; // Very big Number
-                std::pair<int, int> target_location;
-                // int curHealth;
-
-
-                for (int iRow = -1; iRow < 2; iRow++) {
-                    for (int iCol = -1; iCol < 2; iCol++) {
-                        if (iRow != 0 && iCol != 0) {
-                            if ((sLocation.first + iRow > 0 && sLocation.first + iRow < numRows) &&
-                                (sLocation.second + iCol > 0 && sLocation.second + iCol < numCols)) {
-                                if (gameBoard->matrix[sLocation.first + iRow][sLocation.second + iCol] != nullptr &&
-                                    gameBoard->matrix[sLocation.first + iRow][sLocation.second + iCol]->playerNumber ==
-                                    myPlayerNum)// If its an enemy Soldier
-                                {//heal
-                                    gameBoard->matrix[sLocation.first + iRow][sLocation.second + iCol]->updateHP(200);
-
-
-                                }
-                            }
-                        }
-
-
-                    }
-                }
-
-
-
-
-                // Finding other Snipers and make them attack
-                for (int iRow = 0; iRow < numRows; iRow++) {
-                    for (int iCol = 0; iCol < numCols; iCol++) {
-                        if (gameBoard->matrix[iRow][iCol] != nullptr &&
-                            gameBoard->matrix[iRow][iCol]->playerNumber == myPlayerNum &&
-                            gameBoard->matrix[iRow][iCol]->type == Soldier::Type::Paramedic)// If its an enemy Soldier
-                            gameBoard->matrix[iRow][iCol]->attack(gameBoard, {iRow, iCol});
-                    }
-
-                }
-            }
-
-
-
-
+        }
 
 
     };

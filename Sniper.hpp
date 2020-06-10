@@ -51,21 +51,21 @@ namespace WarGame{
             unsigned int myPlayerNum = (*gameBoard)[sLocation]->playerNumber;
             int numRows = gameBoard->matrix.size();
             int numCols = gameBoard->matrix[0].size();
-            int highest_enemy_health = 0; // Very big Number
-            std::pair<int,int> target_location;
-           int curHealth;
+            double nearest_enemy_distance = 100000000; // Very big Number
+            std::pair<int,int> nearest_enemy_location;
+            double dis;
 
 
             for (int iRow=0; iRow<numRows; iRow++) {
                 for (int iCol=0; iCol<numCols; iCol++) {
                     if (gameBoard->matrix[iRow][iCol] != nullptr && gameBoard->matrix[iRow][iCol]->playerNumber != myPlayerNum )// If its an enemy Soldier
-                    {//Calculate the enemy with most health
-                        curHealth = gameBoard->matrix[iRow][iCol]->HP;
-                        if( curHealth > highest_enemy_health )
+                    {//Calculate Distance
+                        dis = distance(sLocation,iRow,iCol);
+                        if( dis < nearest_enemy_distance )
                         {   // Update nearest enemy
-                            highest_enemy_health = curHealth;
-                            target_location.first = iRow;
-                            target_location.second = iCol;
+                            nearest_enemy_distance = dis;
+                            nearest_enemy_location.first = iRow;
+                            nearest_enemy_location.second = iCol;
                         }
                         else{
                             cout<<"enemy far away"<< endl;
@@ -76,8 +76,8 @@ namespace WarGame{
             }
             // now we have the location of the target
             // use "heal" to change HP.
-            (*gameBoard)[target_location]->updateHP(-1*Sniper::Damage);
-            std::cout<<"Soldier : {" << sLocation.first <<"," << sLocation.second <<"} Did " << Damage << " Damage to : {" << target_location.first <<","<<target_location.second <<"}"<< endl;
+            (*gameBoard)[nearest_enemy_location]->updateHP(-1*Sniper::Damage);
+            std::cout<<"Soldier : {" << sLocation.first <<"," << sLocation.second <<"} Did " << Damage << " Damage to : {" << nearest_enemy_location.first <<","<<nearest_enemy_location.second <<"}"<< endl;
         }
 
 

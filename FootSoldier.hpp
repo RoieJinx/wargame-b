@@ -58,12 +58,12 @@ public:
         else if( newHP <= 0 )
         {
             //delete this;
-            return false;
+            return true;
         }
         else
         {
             HP = newHP;
-            return true;
+            return false;
         }
     }
 

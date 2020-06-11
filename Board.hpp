@@ -63,17 +63,22 @@ namespace WarGame {
         int num_of_rows = matrix.size();
         int num_of_collumns = matrix[0].size();
 
+       // cout << " Did I got here?" << endl;
+
         for( int r = 0 ; r < num_of_rows ; r++ )
         {
             for( int c = 0 ; c < num_of_collumns ; c++)
             {
-                if(matrix[r][c] != nullptr) // If there is a Soldier on this  spot
+                if(this->matrix[r][c] != nullptr) // If there is a Soldier on this  spot
                 {
-                   if(matrix[r][c]->playerNumber == player_number)
-                       return true;
+                   if(this->matrix[r][c]->playerNumber == player_number)
+                   {
+                       cout<< " It return true" << endl;
+                       return true;}
                 }
             }
         }
+        cout<< " It return false" << endl;
         return false;
     }
 

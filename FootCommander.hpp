@@ -40,12 +40,12 @@ namespace WarGame{
             else if( newHP <= 0 )
             {
                 //delete this;
-                return false;
+                return true;
             }
             else
             {
                 HP = newHP;
-                return true;
+                return false;
             }
         }
         double distance(std::pair<int,int> mySoldier , int x , int y)

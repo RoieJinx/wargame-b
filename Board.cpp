@@ -23,11 +23,19 @@ void WarGame::Board::move(unsigned int player_number, std::pair<int,int> source,
     //
     if((*(this))[source] == nullptr || (*(this))[source]->playerNumber != player_number )
         throw  std::invalid_argument("Invalid Argument!");
+
     Position after_move = (source + dirs[static_cast<int>(direction)]);
 
     /**
      * Check out of boundd after move
      * */
+    if(
+            after_move.first > (*(this)).matrix.size()-1  ||
+            after_move.first < 0  ||
+            after_move.second > (*(this)).matrix[0].size()-1  ||
+            after_move.second < 0
+     )
+        throw  std::invalid_argument("Invalid Argument!");
 
     // 2. Check if destination location is valid.
     if((*(this))[after_move] == nullptr)// If the pointer is free and do not contain a soldier.

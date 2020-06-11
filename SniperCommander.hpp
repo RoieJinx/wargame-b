@@ -81,7 +81,7 @@ namespace WarGame{
             // now we have the location of the target
             // use "heal" to change HP.
            //(*gameBoard)[target_location]->updateHP(-1*SniperCommander::Damage);
-            if( (*gameBoard)[target_location]->updateHP(-1*SniperCommander::Damage) );// If Target is dead ,delete soldier  and change the pointer to null on the board.
+            if( (*gameBoard)[target_location]->updateHP(-1*SniperCommander::Damage) )// If Target is dead ,delete soldier  and change the pointer to null on the board.
             {
                 delete (*gameBoard)[target_location];
                 (*gameBoard)[target_location] = nullptr;

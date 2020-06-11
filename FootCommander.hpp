@@ -88,7 +88,7 @@ namespace WarGame{
             // use "heal" to change HP.
            //(*gameBoard)[nearest_enemy_location]->updateHP(-1*FootCommander::Damage);
 
-            if( (*gameBoard)[nearest_enemy_location]->updateHP(-1*FootCommander::Damage) );// If Target is dead ,delete soldier  and change the pointer to null on the board.
+            if( (*gameBoard)[nearest_enemy_location]->updateHP(-1*FootCommander::Damage) )// If Target is dead ,delete soldier  and change the pointer to null on the board.
             {
                 delete (*gameBoard)[nearest_enemy_location];
                 (*gameBoard)[nearest_enemy_location] = nullptr;

@@ -39,7 +39,7 @@ class Board;
         Soldier(int player);
         Soldier(int player, Type type, int HP);
         virtual void attack(Board *gameBoard, std::pair<int,int> sLocation) = 0;
-        virtual void updateHP(int health) = 0;// Uses special ability of the solider
+        virtual bool updateHP(int health) = 0;// Uses special ability of the solider
         virtual ~Soldier(){}
 
     };

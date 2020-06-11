@@ -39,15 +39,24 @@ namespace WarGame{
             cout << "  con ParamedicCommander1" << endl;
         }
 
-        void updateHP(int hp)
+        bool updateHP(int hp)
         {
             int newHP = HP + hp;
             if( newHP > MAX_HP )
+            {
                 HP = MAX_HP;
-            else if( newHP < 0 )
-                HP = 0;
+                return false;
+            }
+            else if( newHP <= 0 )
+            {
+                //delete this;
+                return false;
+            }
             else
+            {
                 HP = newHP;
+                return true;
+            }
         }
 
 
@@ -61,7 +70,7 @@ namespace WarGame{
                 std::pair<int, int> target_location;
                 // int curHealth;
 
-
+                //
                 for (int iRow = -1; iRow < 2; iRow++) {
                     for (int iCol = -1; iCol < 2; iCol++) {
                         if (iRow != 0 && iCol != 0) {

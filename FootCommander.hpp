@@ -29,15 +29,24 @@ namespace WarGame{
             cout << "  con FootCommander1" << endl;
         }
 
-        void updateHP(int hp)
+        bool updateHP(int hp)
         {
             int newHP = HP + hp;
             if( newHP > MAX_HP )
+            {
                 HP = MAX_HP;
-            else if( newHP < 0 )
-                HP = 0;
+                return false;
+            }
+            else if( newHP <= 0 )
+            {
+                //delete this;
+                return false;
+            }
             else
+            {
                 HP = newHP;
+                return true;
+            }
         }
         double distance(std::pair<int,int> mySoldier , int x , int y)
         {
@@ -77,14 +86,17 @@ namespace WarGame{
             }
             // now we have the location of the target
             // use "heal" to change HP.
-            (*gameBoard)[nearest_enemy_location]->updateHP(-1*FootCommander::Damage);
-            if((*gameBoard)[nearest_enemy_location]->HP == 0)
+           //(*gameBoard)[nearest_enemy_location]->updateHP(-1*FootCommander::Damage);
+
+            if( (*gameBoard)[nearest_enemy_location]->updateHP(-1*FootCommander::Damage) );// If Target is dead ,delete soldier  and change the pointer to null on the board.
             {
                 delete (*gameBoard)[nearest_enemy_location];
                 (*gameBoard)[nearest_enemy_location] = nullptr;
+                std::cout <<" Should be destructed " << endl;
+
             }
 
-            //std::cout<<"Soldier : {" << sLocation.first <<"," << sLocation.second <<"} Did " << Damage << " Damage to : {" << nearest_enemy_location.first <<","<<nearest_enemy_location.second <<"}"<< endl;
+           // std::cout<<"Soldier : {" << sLocation.first <<"," << sLocation.second <<"} Did " << Damage << " Damage to : {" << nearest_enemy_location.first <<","<<nearest_enemy_location.second <<"}"<< endl;
 
             // Finding other FootSoldiers and make them attack
             for (int iRow=0; iRow<numRows; iRow++) {

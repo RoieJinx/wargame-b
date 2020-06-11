@@ -27,22 +27,26 @@ namespace WarGame{
         {
             cout << "  con Sniper1" << endl;
         }
-        double distance(std::pair<int,int> mySoldier , int x , int y)
-        {
-            double d = pow(mySoldier.first-x,2) + pow(mySoldier.second-y,2);
-            d = sqrt(d);
-            return d;
-        }
 
-        void updateHP(int hp)
+
+        bool updateHP(int hp)
         {
             int newHP = HP + hp;
             if( newHP > MAX_HP )
+            {
                 HP = MAX_HP;
-            else if( newHP < 0 )
-                HP = 0;
+                return false;
+            }
+            else if( newHP <= 0 )
+            {
+                //delete this;
+                return false;
+            }
             else
+            {
                 HP = newHP;
+                return true;
+            }
         }
 
         void attack(Board* gameBoard,std::pair<int,int> sLocation)
@@ -76,8 +80,14 @@ namespace WarGame{
             }
             // now we have the location of the target
             // use "heal" to change HP.
-            (*gameBoard)[target_location]->updateHP(-1*Sniper::Damage);
-            std::cout<<"Soldier : {" << sLocation.first <<"," << sLocation.second <<"} Did " << Damage << " Damage to : {" << target_location.first <<","<<target_location.second <<"}"<< endl;
+            if( (*gameBoard)[target_location]->updateHP(-1*Sniper::Damage) );// If Target is dead ,delete soldier  and change the pointer to null on the board.
+            {
+                delete (*gameBoard)[target_location];
+                (*gameBoard)[target_location] = nullptr;
+                std::cout <<" Should be destructed " << endl;
+
+            }
+            //std::cout<<"Soldier : {" << sLocation.first <<"," << sLocation.second <<"} Did " << Damage << " Damage to : {" << target_location.first <<","<<target_location.second <<"}"<< endl;
         }
 
 

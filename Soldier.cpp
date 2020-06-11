@@ -13,18 +13,7 @@ using namespace std;
 //using namespace Soldier;
 
 
-/**
- * Position location;
-        Board *board;
-        unsigned int playerNumber; // Who own me?
-        enum class Type {
-            FootSolider, FootSoliderCommander, Sniper, SniperCommander, Paramedic, ParamedicCommander
-        };
-        Type type;
-        //initial health points
-        static const int InitialHealthPoints;
-        int HP;
- */
+
 using namespace WarGame;
 Soldier::Soldier(int player)
 {
@@ -35,4 +24,5 @@ Soldier::Soldier(int player, Type type, int HP) : playerNumber(player), type(typ
 {
     cout<< "Solider Built2" << endl;
 }
+
 

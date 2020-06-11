@@ -47,15 +47,24 @@ public:
         return d;
     }
 
-    void updateHP(int hp)
+    bool updateHP(int hp)
     {
         int newHP = HP + hp;
         if( newHP > MAX_HP )
+        {
             HP = MAX_HP;
-        else if( newHP < 0 )
-            HP = 0;
+            return false;
+        }
+        else if( newHP <= 0 )
+        {
+            //delete this;
+            return false;
+        }
         else
+        {
             HP = newHP;
+            return true;
+        }
     }
 
     void attack(Board* gameBoard,std::pair<int,int> sLocation)
@@ -89,7 +98,16 @@ public:
         }
         // now we have the location of the target
         // use "heal" to change HP.
-        (*gameBoard)[nearest_enemy_location]->updateHP(-1*FootSoldier::Damage);
+        //(*gameBoard)[nearest_enemy_location]->updateHP(-1*FootSoldier::Damage);
+
+        if( (*gameBoard)[nearest_enemy_location]->updateHP(-1*FootSoldier::Damage) );// If Target is dead ,delete soldier  and change the pointer to null on the board.
+        {
+            delete (*gameBoard)[nearest_enemy_location];
+            (*gameBoard)[nearest_enemy_location] = nullptr;
+            std::cout <<" Should be destructed " << endl;
+
+        }
+
         std::cout<<"Soldier : {" << sLocation.first <<"," << sLocation.second <<"} Did " << Damage << " Damage to : {" << nearest_enemy_location.first <<","<<nearest_enemy_location.second <<"}"<< endl;
     }
 

@@ -40,15 +40,24 @@ namespace WarGame{
             cout << "  con Paramedic1" << endl;
         }
 
-        void updateHP(int hp)
+        bool updateHP(int hp)
         {
             int newHP = HP + hp;
             if( newHP > MAX_HP )
+            {
                 HP = MAX_HP;
-            else if( newHP < 0 )
-                HP = 0;
+                return false;
+            }
+            else if( newHP <= 0 )
+            {
+                //delete this;
+                return false;
+            }
             else
+            {
                 HP = newHP;
+                return true;
+            }
         }
         void attack(Board* gameBoard,std::pair<int,int> sLocation)
         {

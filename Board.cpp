@@ -17,6 +17,13 @@
 void WarGame::Board::move(unsigned int player_number, std::pair<int,int> source, MoveDIR direction)
 {
 
+    if(
+            source.first > (*(this)).matrix.size()-1  ||
+            source.first < 0  ||
+                               source.second > (*(this)).matrix[0].size()-1  ||
+            source.second < 0
+            )
+        throw  std::invalid_argument("Invalid Argument!");
 
 
     // 1. Check if there is a solider in the source location, and if the player own this solider
@@ -53,6 +60,7 @@ void WarGame::Board::move(unsigned int player_number, std::pair<int,int> source,
 //board[{0,1}] = new FootSoldier(1);
 WarGame::Soldier*& WarGame::Board::operator[](std::pair<int,int> location)
 {
+
     return matrix[location.first][location.second];
 }
 
